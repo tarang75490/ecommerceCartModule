@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "dev":"nodemon src/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +19,8 @@
     "fastify-swagger": "^3.1.2",
     "mongoose": "^5.9.24",
     "schema": "^0.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
