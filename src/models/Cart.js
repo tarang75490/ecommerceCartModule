@@ -27,6 +27,11 @@ const cartSchema = new mongoose.Schema({
             type:Number,
             required:true,
         },
+        quantityToBuy:{
+            type:Number,
+            required:true,
+            default:1
+        },
         mainCategory:{
             type:String,
             required:true,
@@ -43,7 +48,7 @@ const cartSchema = new mongoose.Schema({
         },
 
 })
-
+cartSchema.index({ customerId: 1, variantId: 1 })
 
 
 

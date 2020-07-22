@@ -66,21 +66,56 @@ exports.getProduct= async (req, res) => {
 }
 
 
-exports.updateProduct = async (req, res) => {
+exports.emptyCart= async (req, res) => {
     try {
-        let response = await service.updateProductOfCart(req.fastify, req.body)
+        let response = await service.emptyProductsofCart(req.fastify, req.query)
         if(response.error){
             res.code(400)
                 throw new HttpError('faliure', 22005,response.error)
         }
+        console.log(response)
         return res.status(200).send({
             status: 'success',
             data: response
         })
     } catch (e) {
         res.code(500)
-        throw new HttpError('faliure', 2001, "Update Product to Cart Failed", e.message)
+        throw new HttpError('faliure', 2001, "Emptying the  cart Failed", e.message)
     }
 }
 
 
+exports.updateQuantityToBuy= async (req, res) => {
+    try {
+        let response = await service.updateQuantityToBuyCart(req.fastify, req.body)
+        if(response.error){
+            res.code(400)
+                throw new HttpError('faliure', 22005,response.error)
+        }
+        console.log(response)
+        return res.status(200).send({
+            status: 'success',
+            data: response
+        })
+    } catch (e) {
+        res.code(500)
+        throw new HttpError('faliure', 2001, "Update quantity to buy  Failed", e.message)
+    }
+}
+exports.updateCartAfterPayment= async (req, res) => {
+    try {
+        let response = await service.updateCartAfterPayment(req.fastify, req.body)
+        if(response.error){
+            res.code(400)
+                throw new HttpError('faliure', 22005,response.error)
+        }
+        console.log(response)
+        return res.status(200).send({
+            status: 'success',
+            data: response
+        })
+    } catch (e) {
+        res.code(500)
+        throw new HttpError('faliure', 2001, "Update Quantity of each cart after payment Failed", e.message)
+    }
+}

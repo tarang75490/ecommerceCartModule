@@ -6,18 +6,21 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-    "dev":"nodemon src/app.js"
+    "dev": "nodemon src/app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
     "config": "^3.3.1",
     "dotenv": "^8.2.0",
     "expandenv": "^1.0.0",
     "fastify": "^3.0.3",
     "fastify-axios": "^1.1.2",
+    "fastify-jwt": "^2.1.2",
     "fastify-swagger": "^3.1.2",
     "mongoose": "^5.9.24",
+    "mysql": "^2.18.1",
     "schema": "^0.2.1"
   },
   "devDependencies": {

@@ -94,6 +94,7 @@ fastify.setErrorHandler(function (error, request, reply) {
 
 // Run the server!
 appconfig = config.server
+// const host = '0.0.0.0';
 fastify.listen(appconfig.port, function (err, address) {
   if (err) {  
     fastify.log.error(err)

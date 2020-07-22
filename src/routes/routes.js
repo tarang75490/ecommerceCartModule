@@ -13,11 +13,18 @@ const routes = [
         preValidation: validators.validateAddProductRequest
     },
     {
-        method: "POST",
-        url: "/removeProductsToCart",
+        method: "DELETE",
+        url: "/removeProductFromCart",
         handler: controllers.removeProduct,
         schema: documentation.removeProduct,
         preValidation: validators.validateRemoveProductRequest
+    },
+    {
+        method: "DELETE",
+        url: "/emptyProductsFromCart",
+        handler: controllers.emptyCart,
+        schema: documentation.emptyCart,
+        preValidation: validators.validateEmptyCartRequest
     },
     {
         method: "GET",
@@ -27,11 +34,18 @@ const routes = [
         preValidation: validators.validateGetCartRequest
     },
     {
+        method: "PUT",
+        url: "/updateQuantityToBuy",
+        handler: controllers.updateQuantityToBuy,
+        schema: documentation.updateQuantityToBuy,
+        preValidation: validators.validateUpdateQunatityToBuyRequest
+    },
+    {
         method: "POST",
-        url: "/updateProductsOfCart",
-        handler: controllers.updateProduct,
-        // schema: documentation.updateProduct,
-        // preValidation: validators.validateUpdateProductRequest
+        url: "/updateCart",
+        handler: controllers.updateCartAfterPayment,
+        schema: documentation.updateCart,
+        preValidation: validators.validateUpdateCartRequest
     },
 
 ]

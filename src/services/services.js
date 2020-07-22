@@ -1,8 +1,17 @@
 const Cart = require('../models/Cart')
 
 const addProductToCart = async (fastify,addProductRequest)=>{
-
-    const cart = await new Cart(addProductRequest).save()
+    let cart = await Cart.findOne({
+       customerId:addProductRequest.customerId,
+       variantId:addProductRequest.variantId 
+    })
+    if(!cart){
+     cart = await new Cart(addProductRequest).save()
+    }else{
+        return {
+            error:"This combination of Customer ID and Variant Id exits"
+        }
+    }
     return cart
 }
 
@@ -12,39 +21,70 @@ const removeProductFromCart =async (fastify,removeProductRequest) => {
     const cart = await Cart.findOneAndDelete(removeProductRequest)
     if(!cart){
         return {
-            error:"Product Not Found in cart"
+            error:"Product Not Found in the particular customer cart "
         }
     }
     return cart
 }
-
-
-const updateProductOfCart = (fastify,updateProductRequest) =>{
-
-    // let Variants = ["variantIdinfo"]
-    // Variants.forEach(async (variant)=>{
-    //     const varaintsIncart = await Cart.findOneAndUpdate({
-    //         variantId : variant.variantId,
-    //         quantity : variant.quantity
-    //     })
-    // })
-
-
-
-}
-
-
 const getProductofCart = async(fastify,getProductRequest) => {
     console.log(getProductRequest)
     const products = await Cart.find(getProductRequest)
     return products
 }
 
+const emptyProductsofCart = async(fastify,emptyCartRequest) => {
+    console.log(emptyCartRequest)
+    const deletedCart =await Cart.deleteMany(emptyCartRequest)
+
+    return deletedCart
+
+}
+
+
+const updateQuantityToBuyCart = async(fastify,updateQuantityToBuyRequest) => {
+    console.log(updateQuantityToBuyRequest)
+    let product = await Cart.findOne({customerId: updateQuantityToBuyRequest.customerId,
+                                        variantId: updateQuantityToBuyRequest.variantId })
+    if(!product){
+        return {
+            error:"Product Not Found in the particular customer cart "
+        }
+    }
+        product.quantityToBuy = updateQuantityToBuyRequest.quantityToBuy
+    product = await new Cart(product).save()
+    return product
+}
+
+const updateCartAfterPayment = async(fastify,updateCartAfterPaymentRequest) => {
+    try{
+        console.log(updateCartAfterPaymentRequest)
+        const inventory = await fastify.axios.post("http://localhost:3000/getInventory",updateCartAfterPaymentRequest)
+        console.log(inventory.data.data)
+        inventory.data.data.forEach( async (item)=>{
+            let variant = await Cart.updateMany({variantId:item.variantId},{quantity:item.inventory})  
+            console.log(variant)  
+        })
+
+        return "Updated"
+        
+    }catch(e){
+        console.log(e)
+        return {
+            error:e.response.data.errorCause
+        }
+    }
+    
+}
+
+
+
 
 
 module.exports = {
     addProductToCart,
     removeProductFromCart,
-    updateProductOfCart,
-    getProductofCart
+    getProductofCart,
+    emptyProductsofCart,
+    updateQuantityToBuyCart,
+    updateCartAfterPayment
 }
