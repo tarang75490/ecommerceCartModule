@@ -47,6 +47,11 @@ mongoose.plugin((schema) => {
     }
   };
 });
+//cross-origin  
+fastify.register(require('fastify-cors'), {
+  origin: '*',
+});
+
 
 
 // Register fastify axios
@@ -54,6 +59,7 @@ fastify.register(require('fastify-axios'))
 
 // Import Swagger Options
 const swagger = require('./config/swagger')
+
 
 // Register Swagger
 fastify.register(require('fastify-swagger'), swagger.options)

@@ -5,11 +5,14 @@ const HttpError = require('../models/errors/httpError')
 
 exports.addProduct= async (req, res) => {
     try {
+        console.log(req.body)
         let response = await service.addProductToCart(req.fastify, req.body)
         
         if(response.error){
-            res.code(400)
-                throw new HttpError('faliure', 22005,response.error)
+            res.status(200).send({
+                status: 'failure',
+                message:response.error
+            })
         }
         return res.status(201).send({
             status: 'success',
@@ -18,7 +21,7 @@ exports.addProduct= async (req, res) => {
         })
     } catch (e) {
         res.code(500)
-        throw new HttpError('faliure', 2001, "Add Product to Cart Failed", e.message)
+        throw new HttpError('failure', 2001, "Add Product to Cart Failed", e.message)
     }
 }
 
@@ -31,8 +34,10 @@ exports.removeProduct= async (req, res) => {
     try {
         let response = await service.removeProductFromCart(req.fastify, req.body)
         if(response.error){
-            res.code(400)
-                throw new HttpError('faliure', 22005,response.error)
+            res.status(200).send({
+                status: 'failure',
+                message:response.error
+            })
         }
         return res.status(200).send({
             status: 'success',
@@ -70,13 +75,18 @@ exports.emptyCart= async (req, res) => {
     try {
         let response = await service.emptyProductsofCart(req.fastify, req.query)
         if(response.error){
+            return res.status(200).send({
+                status: 'failure',
+                message: response.error
+            })
             res.code(400)
                 throw new HttpError('faliure', 22005,response.error)
         }
         console.log(response)
         return res.status(200).send({
             status: 'success',
-            data: response
+            data: response,
+            message:"Cart Product Removed Successfully"
         })
     } catch (e) {
         res.code(500)
@@ -89,6 +99,10 @@ exports.updateQuantityToBuy= async (req, res) => {
     try {
         let response = await service.updateQuantityToBuyCart(req.fastify, req.body)
         if(response.error){
+            return res.status(200).send({
+                status: 'failure',
+                data: response.error
+            })
             res.code(400)
                 throw new HttpError('faliure', 22005,response.error)
         }

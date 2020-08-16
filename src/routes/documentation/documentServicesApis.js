@@ -57,13 +57,30 @@ exports.addProduct = {
     },
     
     response: {
+        200: {
+            description: 'Successful response',
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": ['failure', 'success'],
+                },
+                "message": {
+                    "type": "string"
+                },
+                },
+            "required": [
+                "status",
+                "message"
+            ]
+        },
         201: {
             description: 'Successful response',
             "type": "object",
             "properties": {
                 "status": {
                     "type": "string",
-                    "enum": ['failiure', 'success'],
+                    "enum": ['failure', 'success'],
                 },
                 "message": {
                     "type": "string"
@@ -205,7 +222,7 @@ exports.removeProduct = {
             "properties": {
                 "status": {
                     "type": "string",
-                    "enum": ['failiure', 'success'],
+                    "enum": ['failure', 'success'],
                 },
                 "message": {
                     "type": "string"
@@ -260,7 +277,7 @@ exports.removeProduct = {
             },
             "required": [
                 "status",
-                "data"
+    
             ]
         }, 400: {
             "description": 'Error response',
@@ -475,7 +492,7 @@ exports.emptyCart = {
             "properties": {
                 "status": {
                     "type": "string",
-                    "enum": ['failiure', 'success'],
+                    "enum": ['failure', 'success'],
                 },
                 "message": {
                     "type": "string"
@@ -489,7 +506,6 @@ exports.emptyCart = {
             },
             "required": [
                 "status",
-                "data"
             ]
         }, 400: {
             "description": 'Error response',

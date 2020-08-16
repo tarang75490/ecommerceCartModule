@@ -34,6 +34,7 @@ exports.validateAddProductRequest = function (req, res, done) {
     }
 }
 exports.validateRemoveProductRequest = function (req, res, done) {
+    console.log(req.body)
     if (!req.body.customerId) {
         res.code(400)
         done(new HttpError('faliure', 20001, 'customerId is missing'))

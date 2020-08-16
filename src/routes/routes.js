@@ -13,7 +13,7 @@ const routes = [
         preValidation: validators.validateAddProductRequest
     },
     {
-        method: "DELETE",
+        method: "POST",
         url: "/removeProductFromCart",
         handler: controllers.removeProduct,
         schema: documentation.removeProduct,

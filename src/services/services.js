@@ -9,9 +9,9 @@ const addProductToCart = async (fastify,addProductRequest)=>{
      cart = await new Cart(addProductRequest).save()
     }else{
         return {
-            error:"This combination of Customer ID and Variant Id exits"
+            error:"This Product is Already added to your Cart"
         }
-    }
+    }   
     return cart
 }
 
