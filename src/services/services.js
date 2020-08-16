@@ -58,7 +58,7 @@ const updateQuantityToBuyCart = async(fastify,updateQuantityToBuyRequest) => {
 const updateCartAfterPayment = async(fastify,updateCartAfterPaymentRequest) => {
     try{
         console.log(updateCartAfterPaymentRequest)
-        const inventory = await fastify.axios.post("http://localhost:3000/getInventory",updateCartAfterPaymentRequest)
+        const inventory = await fastify.axios.post("http://localhost:3010/getInventory",updateCartAfterPaymentRequest)
         console.log(inventory.data.data)
         inventory.data.data.forEach( async (item)=>{
             let variant = await Cart.updateMany({variantId:item.variantId},{quantity:item.inventory})  
